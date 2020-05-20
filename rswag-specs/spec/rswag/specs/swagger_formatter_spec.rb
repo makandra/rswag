@@ -370,7 +370,19 @@ module Rswag
                       schema: { foo: :bar }
                     }, {
                       in: :headers
-                    }]
+                    }],
+                    requestBody: {
+                      content: {
+                        'application/json' => {
+                          examples: {
+                            example_1: {
+                              summary: 'Example 1',
+                              value: 'example value',
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -385,7 +397,7 @@ module Rswag
             expect(doc_2[:paths]['/path/'][:get][:parameters]).to eql([{ in: :headers }])
             expect(doc_2[:paths]['/path/'][:get][:requestBody]).to eql(content: {
               'application/xml' => { schema: { foo: :bar } },
-              'application/json' => { schema: { foo: :bar } }
+              'application/json' => { schema: { foo: :bar }, examples: { example_1: { summary: 'Example 1', value: 'example value' } } }
             })
           end
         end
